@@ -1,1 +1,257 @@
+/* ================= 全局变量与基础重置 ================= */
+:root {
+    --bg-color: #0a0a0c;          /* 极深黑灰底色 */
+    --text-main: #f0f3f6;         /* 高对比白 */
+    --text-muted: #8b949e;        /* 哑光灰 */
+    --accent-blue: #2f81f7;       /* 顶尖实验室标志性深蓝色点缀 */
+    --border-color: #21262d;      /* 极淡的分割线 */
+}
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;      /* 平滑滚动 */
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+body {
+    max-width: 760px;             /* 严谨的单栏学术排版宽度 */
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ================= 导航栏 (Header) ================= */
+header {
+    padding: 40px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+}
+
+nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.15s ease;
+}
+
+nav a:hover {
+    color: var(--text-main);      /* 纯色渐变，无任何闪烁动画 */
+}
+
+/* ================= 全局排版与大面积留白 ================= */
+main {
+    margin-top: 20px;
+}
+
+section {
+    padding: 55px 0;              /* 保持大面积空白感 */
+    border-bottom: 1px solid var(--border-color);
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    text-transform: uppercase;    /* 部分大写增加学术严谨感 */
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+}
+
+/* ================= A+B 整合区 (Hero/About) ================= */
+.hero-section {
+    padding-top: 10px;
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+    color: var(--text-main);
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    font-weight: 400;
+}
+
+.bio {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    max-width: 680px;
+}
+
+.contact-links {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.contact-links a {
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.contact-links a:hover {
+    color: var(--accent-blue);     /* 少量深蓝色点缀 */
+}
+
+/* ================= 项目展示 (Works) ================= */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.project-item h3 a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.project-item h3 a:hover {
+    color: var(--accent-blue);
+}
+
+.project-item p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* ================= 教育经历 (Education) ================= */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.timeline-item {
+    display: flex;
+}
+
+.timeline-item .years {
+    width: 140px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.timeline-item h3 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* ================= 兴趣与技能 (Interests & Skills) ================= */
+.clean-list {
+    list-style: none;
+}
+
+.clean-list li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+}
+
+.clean-list li::before {
+    content: "▪";                 /* 极简方块符号 */
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+    font-size: 0.75rem;
+    top: 2px;
+}
+
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.skill-group h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+
+.skill-group p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ================= 其它区域 ================= */
+.placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+footer {
+    padding: 50px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ================= 完全响应式适配 (移动端优先微调) ================= */
+@media (max-width: 640px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    nav ul {
+        flex-wrap: wrap;
+        gap: 12px 18px;
+    }
+    .timeline-item {
+        flex-direction: column;
+        gap: 2px;
+    }
+    .timeline-item .years {
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .tagline {
+        font-size: 1.1rem;
+    }
+}
