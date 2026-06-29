@@ -149,6 +149,34 @@ section{
 
 }
 
+/* ================= Profile ================= */
+
+.profile-photo{
+
+    display:block;
+
+    width:220px;
+
+    height:220px;
+
+    margin:0 auto 45px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid var(--border-color);
+
+    transition:.35s;
+
+}
+
+.profile-photo:hover{
+
+    border-color:var(--accent);
+
+}
+
 /* =======================================================
 Academic Style
 去掉卡片
