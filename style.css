@@ -1,12 +1,12 @@
-/* ================= 全局变量与配色 (不阴暗、不刺眼的现代深色) ================= */
+/* ================= 全局变量与配色 ================= */
 :root {
-    --bg-main: #181a1f;         /* 柔和的深灰底色，非死黑 */
-    --bg-card: #23252b;         /* 卡片底色，微微凸起感 */
-    --text-main: #e2e4e9;       /* 珍珠白正文，防刺眼 */
-    --text-muted: #9ba1ab;      /* 灰色辅助文本 */
-    --accent: #5c8ce6;          /* 清新克制的科技蓝 */
-    --border-color: #31343d;    /* 极淡的卡片边框 */
-    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* 柔和阴影 */
+    --bg-main: #181a1f;         
+    --bg-card: #23252b;         
+    --text-main: #e2e4e9;       
+    --text-muted: #9ba1ab;      
+    --accent: #5c8ce6;          
+    --border-color: #31343d;    
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
 }
 
 * {
@@ -16,10 +16,10 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* 基础平滑滚动备份 */
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     line-height: 1.7;
 }
 
@@ -29,14 +29,25 @@ body {
     padding: 0 24px;
 }
 
-/* ================= 导航栏 (Header) ================= */
+/* ================= 导航栏增强 (Header) ================= */
 header {
-    padding: 40px 0;
-    position: sticky;           /* 让导航栏在滚动时可选吸顶，增强体验 */
+    padding: 30px 0;
+    position: sticky;           
     top: 0;
-    background-color: rgba(24, 26, 31, 0.85); /* 半透明背景 */
-    backdrop-filter: blur(8px); /* 磨砂玻璃效果 (AI实验室常用) */
     z-index: 100;
+    /* 初始状态：完全透明，无边框 */
+    background-color: rgba(24, 26, 31, 0);
+    backdrop-filter: blur(0px); 
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease, padding 0.4s ease;
+}
+
+/* 【功能：背景渐变】当 JS 检测到滚动时激活此类 */
+header.scrolled {
+    padding: 18px 0; /* 滚动时导航栏收窄，更显精致 */
+    background-color: rgba(24, 26, 31, 0.85); 
+    backdrop-filter: blur(10px); 
+    border-bottom: 1px solid var(--border-color);
 }
 
 nav {
@@ -49,38 +60,51 @@ nav {
     font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    color: var(--text-main);
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 24px;
+    gap: 28px;
 }
 
 nav a {
     color: var(--text-muted);
     text-decoration: none;
     font-size: 0.95rem;
-    transition: color 0.2s ease;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
 nav a:hover {
     color: var(--text-main);
 }
 
-/* ================= 全局排版与大面积留白 ================= */
-main {
-    padding-bottom: 80px;
+/* 【功能：导航高亮】当页面滚动到对应区块时激活 */
+nav a.active {
+    color: var(--accent);
+}
+nav a.active::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent);
+    border-radius: 2px;
 }
 
+/* ================= 页面骨架 ================= */
 section {
-    padding: 50px 0;
+    padding: 60px 0;
 }
 
 .name-title {
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     font-weight: 700;
+    margin-top: 40px;
     margin-bottom: 40px;
     letter-spacing: -0.02em;
 }
@@ -89,10 +113,9 @@ section {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 24px;
-    color: var(--text-main);
 }
 
-/* ================= 卡片式设计 (Cards) ================= */
+/* ================= 【功能：卡片悬停动画与基础样式】 ================= */
 .card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -100,177 +123,103 @@ section {
     padding: 30px;
     margin-bottom: 24px;
     box-shadow: var(--card-shadow);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    /* 采用贝塞尔曲线，让悬停回弹极其丝滑 */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* 悬停微调：卡片轻微上浮，边框点缀蓝色，阴影加深 */
 .card:hover {
-    border-color: #454955; /* 鼠标悬浮时边框微微变亮 */
+    transform: translateY(-6px); 
+    border-color: rgba(92, 140, 230, 0.4); 
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* ================= About 区特定卡片 ================= */
-.contact-card ul {
-    list-style: none;
+/* ================= 【功能：元素滚动淡入】 ================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(35px); /* 初始在下方 35 像素处 */
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.contact-card li {
-    margin-bottom: 12px;
-    color: var(--text-main);
+/* 当进入视口后，由 JS 加上 visible */
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.contact-card li:last-child {
-    margin-bottom: 0;
-}
+/* ================= 卡片内部核心排版 ================= */
+.contact-card ul { list-style: none; }
+.contact-card li { margin-bottom: 12px; }
+.contact-card li:last-child { margin-bottom: 0; }
+.contact-card span { color: var(--text-muted); display: inline-block; width: 75px; }
+.contact-card a { color: var(--accent); text-decoration: none; }
+.contact-card a:hover { text-decoration: underline; }
 
-.contact-card span {
-    color: var(--text-muted);
-    display: inline-block;
-    width: 70px; /* 对齐标签 */
-}
-
-.contact-card a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.contact-card a:hover {
-    text-decoration: underline;
-}
-
-/* 区域卡片内的标题 */
 .section-card h2 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 20px;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-/* 教育经历排列 */
-.edu-item {
+.edu-item { display: flex; align-items: center; margin-bottom: 14px; }
+.edu-item:last-child { margin-bottom: 0; }
+.edu-year { color: var(--text-muted); width: 120px; font-variant-numeric: tabular-nums; }
+.edu-degree { font-weight: 600; width: 60px; }
+
+.clean-list { list-style: none; }
+.clean-list li { position: relative; padding-left: 20px; margin-bottom: 10px; }
+.clean-list li::before {
+    content: ""; position: absolute; left: 0; top: 10px;
+    width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%;
+}
+
+.placeholder { color: var(--text-muted); font-style: italic; }
+
+/* ================= 【功能：返回顶部按钮】 ================= */
+#backToTop {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 44px;
+    height: 44px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 50%;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    margin-bottom: 12px;
-}
-
-.edu-item:last-child {
-    margin-bottom: 0;
-}
-
-.edu-year {
-    color: var(--text-muted);
-    width: 120px;
-    font-variant-numeric: tabular-nums;
-}
-
-.edu-degree {
-    font-weight: 600;
-    width: 60px;
-}
-
-.edu-major {
-    color: var(--text-main);
-}
-
-/* 兴趣列表 */
-.clean-list {
-    list-style: none;
-}
-
-.clean-list li {
-    position: relative;
-    padding-left: 20px;
-    margin-bottom: 10px;
-}
-
-.clean-list li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 6px;
-    height: 6px;
-    background-color: var(--accent);
-    border-radius: 50%;
-}
-
-/* ================= Projects 折叠组件 ================= */
-.project-card h3 {
+    justify-content: center;
     font-size: 1.1rem;
-    margin-bottom: 10px;
+    z-index: 99;
+    box-shadow: var(--card-shadow);
+    /* 初始隐藏状态 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
 }
 
-.keywords {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 16px;
+/* 滚动到下方时激活 */
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-/* HTML5 details 折叠面板样式优化 */
-details {
-    background-color: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-}
-
-summary {
-    font-weight: 500;
-    cursor: pointer;
+#backToTop:hover {
+    border-color: var(--accent);
     color: var(--accent);
-    outline: none;
-    user-select: none;
+    transform: translateY(-3px);
 }
 
-/* 展开后的正文 */
-.details-content {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px dashed var(--border-color);
-    font-size: 0.95rem;
-    color: var(--text-muted);
-}
-
-.code-link {
-    font-size: 0.95rem;
-}
-
-.code-link a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.code-link a:hover {
-    text-decoration: underline;
-}
-
-/* ================= 占位符 & 页脚 ================= */
-.placeholder {
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-footer {
-    padding: 40px 0;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border-color);
-}
-
-/* ================= 响应式设计 ================= */
+/* ================= 响应式 ================= */
 @media (max-width: 600px) {
-    .edu-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-        margin-bottom: 20px;
-    }
-    nav {
-        flex-direction: column;
-        gap: 16px;
-    }
-    .name-title {
-        font-size: 2rem;
-    }
+    header.scrolled { padding: 12px 0; }
+    .edu-item { flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 20px; }
+    nav { flex-direction: column; gap: 16px; }
+    .name-title { font-size: 2.1rem; }
+    #backToTop { bottom: 20px; right: 24px; } /* 移动端靠边收紧 */
 }
